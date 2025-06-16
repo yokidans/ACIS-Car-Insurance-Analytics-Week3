@@ -1,0 +1,7 @@
+input_file: data/raw/insurance_claims.csv
+output_file: data/processed/processed_insurance_data.csv
+steps:
+  - handle_missing_values: drop
+  - encode_categorical: onehot
+  - scale_numerical: standard
+test_split: 0.2

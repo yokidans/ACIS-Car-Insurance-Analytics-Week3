@@ -1,0 +1,19 @@
+preprocess:
+  missing_values: drop
+  categorical_encoding: onehot
+  test_size: 0.2
+  random_state: 42
+
+features:
+  selected_features:
+    - age
+    - vehicle_type
+    - claim_amount
+  target: claim_approved
+
+model:
+  type: xgboost
+  params:
+    max_depth: 6
+    learning_rate: 0.1
+    n_estimators: 100
