@@ -3,7 +3,35 @@ import numpy as np
 import csv
 from datetime import datetime
 from tqdm import tqdm
+import yaml
 import os
+from pathlib import Path
+
+def load_parameters():
+    """Safe parameter loading with defaults"""
+    param_file = Path('params.yaml')
+    defaults = {
+        'input_file': 'data/raw/insurance_claims.csv',
+        'output_file': 'data/processed/processed_insurance_data.csv',
+        'test_split': 0.2,
+        'random_state': 42
+    }
+    
+    try:
+        with open(param_file) as f:
+            params = yaml.safe_load(f)
+            return params.get('preprocess', defaults)
+    except (FileNotFoundError, yaml.YAMLError) as e:
+        print(f"⚠️ Using default parameters: {str(e)}")
+        return defaults
+
+# Usage in your main code:
+params = load_parameters()
+input_path = Path(params['input_file'])
+output_path = Path(params['output_file'])
+
+# Ensure output directory exists
+output_path.parent.mkdir(parents=True, exist_ok=True)
 
 def safe_convert_float(x):
     """Safe conversion to float with European number format support"""
@@ -157,3 +185,36 @@ def load_and_preprocess_data(file_path):
     except Exception as e:
         print(f"❌ Error in data loading: {str(e)}")
         return None
+
+def main():
+    """Main function with DVC-compatible output handling"""
+    # Ensure output directory exists
+    os.makedirs('data/processed', exist_ok=True)
+    
+    # Get absolute paths for reliability
+    input_path = os.path.abspath('data/raw/insurance_claims.csv')
+    output_path = os.path.abspath('data/processed/processed_insurance_data.csv')
+    
+    print(f"\n📂 Input path: {input_path}")
+    print(f"💾 Output path: {output_path}")
+    
+    # Process data
+    processed_df = load_and_preprocess_data(input_path)
+    
+    if processed_df is not None:
+        try:
+            # Write output
+            processed_df.to_csv(output_path, index=False)
+            print(f"\n💾 Successfully saved processed data to: {output_path}")
+            print(f"🔢 Records saved: {len(processed_df):,}")
+            return True
+        except Exception as e:
+            print(f"❌ Failed to save output: {str(e)}")
+            return False
+    else:
+        return False
+
+if __name__ == "__main__":
+    # Exit with status code for DVC
+    success = main()
+    exit(0 if success else 1)

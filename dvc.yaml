@@ -2,26 +2,25 @@ stages:
   preprocess:
     cmd: python task1-EDA/src/data_processing.py
     deps:
-    - data/raw/insurance_claims.csv
-    - task1-EDA/src/data_processing.py
+      - task1-EDA/src/data_processing.py
+      - data/raw/insurance_claims.csv
+      - params.yaml
     outs:
-    - data/processed/processed_insurance_data.csv
+      - data/processed/processed_insurance_data.csv
     params:
-    - preprocess
-  feature_engineering:
-    cmd: python task1/src/modeling.py
-    deps:
-    - data/processed/processed_insurance_data.csv
-    - task1/src/modeling.py
-    outs:
-    - data/outputs/predictions.csv
-    params:
-    - config/feature_params.yaml
+      - preprocess
 
-  evaluate:
-    cmd: python task1/src/reporting.py
+  feature_engineering:
+    cmd: python task1-EDA/src/modeling.py
     deps:
-    - data/outputs/predictions.csv
-    - task1/src/reporting.py
+      - task1-EDA/src/modeling.py
+      - data/processed/processed_insurance_data.csv
+      - params.yaml
+    outs:
+      - data/outputs/predictions.csv
+    params:
+      - feature_engineering
+      - model
     metrics:
-    - reports/evaluation_metrics.json
+      - reports/evaluation_metrics.json:
+          cache: false

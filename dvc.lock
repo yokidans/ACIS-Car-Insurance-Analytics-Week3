@@ -1,0 +1,29 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python task1-EDA/src/data_processing.py
+    deps:
+    - path: data/raw/insurance_claims.csv
+      hash: md5
+      md5: f6b7009b68ae21372b7deca9307fbb23
+      size: 529363713
+    - path: params.yaml
+      hash: md5
+      md5: 47a33bc8ff6409e081e49ec59665140d
+      size: 513
+    - path: task1-EDA/src/data_processing.py
+      hash: md5
+      md5: b4357ae7250aaea6b84de4de7846a030
+      size: 8285
+    params:
+      params.yaml:
+        preprocess:
+          input_file: data/raw/insurance_claims.csv
+          output_file: data/processed/processed_insurance_data.csv
+          test_split: 0.2
+          random_state: 42
+    outs:
+    - path: data/processed/processed_insurance_data.csv
+      hash: md5
+      md5: 5367e8b3a1d235c463a9fb0789304ff8
+      size: 24823990
