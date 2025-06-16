@@ -1,0 +1,24 @@
+﻿preprocess:
+  input_file: "data/raw/insurance_claims.csv"
+  output_file: "data/processed/processed_insurance_data.csv"
+  test_split: 0.2
+  random_state: 42
+
+
+feature_engineering:
+  input_file: "data/processed/processed_insurance_data.csv"
+  output_file: "data/outputs/predictions.csv"
+
+# features:
+  # selected_features:
+  #   - age
+  #   - vehicle_type
+  #   - claim_amount
+  # target: claim_approved
+
+model:
+  type: xgboost
+  params:
+    max_depth: 6
+    learning_rate: 0.1
+    n_estimators: 100
