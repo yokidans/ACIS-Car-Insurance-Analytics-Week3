@@ -11,6 +11,7 @@ feature_engineering:
   target: "totalclaims"
   test_size: 0.2
   random_state: 42
+  imputation_strategy: "iterative"  # Added new parameter
 
 model:
   type: xgboost

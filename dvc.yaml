@@ -18,9 +18,6 @@ stages:
       - params.yaml
     outs:
       - data/outputs/predictions.csv
-    params:
-      - feature_engineering
-      - model
     metrics:
       - reports/evaluation_metrics.json:
           cache: false

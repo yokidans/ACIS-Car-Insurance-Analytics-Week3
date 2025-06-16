@@ -9,8 +9,8 @@ stages:
       size: 529363713
     - path: params.yaml
       hash: md5
-      md5: 47a33bc8ff6409e081e49ec59665140d
-      size: 513
+      md5: ca680e6f3836e4ea9c7fbafb48b6fa28
+      size: 571
     - path: task1-EDA/src/data_processing.py
       hash: md5
       md5: b4357ae7250aaea6b84de4de7846a030
@@ -27,3 +27,27 @@ stages:
       hash: md5
       md5: 5367e8b3a1d235c463a9fb0789304ff8
       size: 24823990
+  feature_engineering:
+    cmd: python task1-EDA/src/modeling.py
+    deps:
+    - path: data/processed/processed_insurance_data.csv
+      hash: md5
+      md5: 5367e8b3a1d235c463a9fb0789304ff8
+      size: 24823990
+    - path: params.yaml
+      hash: md5
+      md5: ca680e6f3836e4ea9c7fbafb48b6fa28
+      size: 571
+    - path: task1-EDA/src/modeling.py
+      hash: md5
+      md5: b8bba3397f0d49ab2e4856ba96458a37
+      size: 7325
+    outs:
+    - path: data/outputs/predictions.csv
+      hash: md5
+      md5: c19cb9b6a5ff1a78544538bc39a7ef8d
+      size: 560862
+    - path: reports/evaluation_metrics.json
+      hash: md5
+      md5: 380eb3dd1087b7001392e514ed0ec8bb
+      size: 2166260
