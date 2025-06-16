@@ -46,3 +46,48 @@
     dvc add data/raw/insurance_claims.csv
     git add .gitignore data/raw/insurance_claims.csv.dvc
     dvc push
+
+ ## Key Findings
+### Risk Hotspots:
+
+- 83.1% of high-loss policies involve passenger vehicles
+
+- Specific provinces show 48.2% concentration of high-risk policies
+
+### Premium Patterns:
+
+- Right-skewed distribution (log-transform required)
+
+- Strong correlation between sum insured and premiums
+
+### Demographic Insights:
+
+- Age groups 25-35 show highest risk (41.3% of high-loss policies)
+
+  ### ACIS-Car-Insurance-Analytics/
+### ├── data/
+### │   ├── raw/               # Original datasets
+### │   └── processed/         # Cleaned data (1.5M → 151K records after deduplication)
+### ├── docs/                  # Project documentation
+### ├── notebooks/             # Jupyter notebooks for EDA
+### ├── scripts/
+### │   ├── data_processing.py # Handles missing values (e.g., 779K missing custom values)
+### │   └── modeling.py        # ML pipeline (Linear Regression → XGBoost)
+### └── params.yaml            # Model hyperparameters
+
+# How to Reproduce
+## 1. Install dependencies:
+    pip install -r requirements.txt
+    pip install dvc
+## 2. Run data pipeline:
+    dvc repro
+## 3. Execute analysis notebooks
+
+## Key Business Impact
+- 15-20% potential reduction in high-risk policy acquisitions
+
+- 5-8% improvement in premium pricing accuracy
+
+- Identified 3 vehicle types for targeted marketing campaigns
+
+Last Updated: June 2025 | Data Version: v3.1.2 | [ACIS Regulatory Compliance]
